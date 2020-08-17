@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">AntiCluster Signage</string>
+    <!-- メニュー -->
+    <string name="menu_setting">Settings</string>
+    <string name="setting_activity">AntiClusterSignage IMS Settings</string>
+    <!-- メイン画面 -->
+    <string name="recordtime">Last tallied time</string>
+    <string name="monitoring_title">Density of\nthe area</string>
+    <string name="attention_title">Keep Social Distance!</string>
+    <string name="near_title">0～3m</string>
+    <string name="around_title">3～10 m"</string>
+    <string name="far_title">10m～</string>
+    <string name="count_unit_text">ppl</string>
+    <integer name="count_unit_size">20</integer>
+    <string name="description_footer">Estimate the number of people by counting smartphone Bluetooth signals.</string>
+    <string name="count_detail1">SCN</string>
+    <string name="count_detail2">CNT</string>
+    <string name="count_detail3">TTL</string>
+    <!-- 設定画面 -->
+    <string name="ble_settings">--- BLE Setting ---</string>
+    <string name="scan_mode">Scan Mode</string>
+    <string-array name="scan_mode_entries">
+        <item>Low power : scans for 0.5 sec and pauses 4.5 sec</item>
+        <item>Balanced : scans for 2 sec and pauses 3 seconds</item>
+        <item>Low latency : scans continuously</item>
+    </string-array>
+    <string-array name="scan_mode_entryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string name="alert_judge_line">--- Estimation criteria of 3 meters --- </string>
+    <string name="rssi_value">Radio wave strength [dBm]</string>
+    <string name="continuous_time">Continuous Time [min]</string>
+    <string name="rssi_value_dialog">Radio wave strength: Judged at a value [dBm] greater than the specified</string>
+    <string name="continuous_time_dialog">Continuous Time: Judged at a value [min] greater than the specified</string>
+    <string name="around_judge_line">--- Estimation criteria of 10 meters --- </string>
+    <string name="logging_ble_scan">Output application log</string>
+    <string name="behavior_setting">--- Behavior Setting ---</string>
+    <string name="screen_update_interval">Screen update Interval [sec]</string>
+    <string name="screen_update_interval_dialog">Interval to update the screen drawing</string>
+    <string name="runin_background">Run in background</string>
+    <string name="graph_setting">--- Graph Setting ---</string>
+    <string name="graph_min_y">Minimum Y-axis value</string>
+    <string name="graph_min_y_dialog">Minimum Y-axis (count value) height to be drawn </string>
+    <string name="graph_start_hour">Start hour [o\'clock]</string>
+    <string name="graph_count_hours">Term of drawing [Hours] *TBI</string>
+    <string name="ims_setting">--- IMS Setting ---</string>
+    <string name="pref_log_level">Log output target</string>
+    <string name="pref_log_level_key" translatable="false">loglevel</string>
+    <string name="pref_log_level_summary">Select log items</string>
+    <string-array name="pref_log_level_list_title">
+        <item>ifLink I/F Device log</item>
+        <item>ifLink I/F IMS log</item>
+        <item>IMS Device log</item>
+        <item>IMS Service log</item>
+    </string-array>
+    <string-array name="pref_log_level_list_values">
+        <item>DEVICE-CONNECTOR</item>
+        <item>IFLINK-CONNECTOR</item>
+        <item>CUSTOM-DEV</item>
+        <item>CUSTOM-IMS</item>
+    </string-array>
+    <string name="send_data_interval">Send Data Interval [sec]</string>
+    <string name="send_data_interval_dialog">Interval to send data</string>
+    <string name="unit_id">Terminal ID</string>
+    <string name="unit_id_dialog">an ID for terminal identification</string>
+    <string name="debug_setting">--- For Debugging ---</string>
+    <string name="draw_count_detail">Draw count details</string>
+    <!-- メッセージ -->
+    <string name="data_load_fail">Failed to load data.</string>
+    <string name="data_save_fail">Failed to save data.</string>
+    <!-- Fragment Label -->
+    <string name="home_fragment_label">Home</string>
+    <string name="setting_fragment_label">Setting</string>
+</resources>

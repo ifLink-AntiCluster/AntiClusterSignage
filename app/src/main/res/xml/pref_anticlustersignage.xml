@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="@string/ble_settings">
+        <ListPreference
+            android:key="scan_mode"
+            android:title="@string/scan_mode"
+            android:entries="@array/scan_mode_entries"
+            android:entryValues="@array/scan_mode_entryValues"
+            android:defaultValue="@string/default_scan_mode"
+            app:useSimpleSummaryProvider="true"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/alert_judge_line">
+        <EditTextPreference
+            android:key="rssi_near"
+            android:title="@string/rssi_value"
+            android:defaultValue="@integer/default_rssi_near"
+            android:selectAllOnFocus="true"
+            android:dialogTitle="@string/rssi_value_dialog"
+            app:useSimpleSummaryProvider="true"/>
+        <!--<EditTextPreference
+            android:key="alert_timer"
+            android:title="@string/continuous_time"
+            android:defaultValue="@integer/default_alert_timer"
+            android:selectAllOnFocus="true"
+            android:dialogTitle="@string/continuous_time_dialog"
+            app:useSimpleSummaryProvider="true"/>-->
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/around_judge_line">
+        <EditTextPreference
+            android:key="rssi_around"
+            android:title="@string/rssi_value"
+            android:defaultValue="@integer/default_rssi_around"
+            android:selectAllOnFocus="true"
+            android:dialogTitle="@string/rssi_value_dialog"
+            app:useSimpleSummaryProvider="true"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/ims_setting">
+        <MultiSelectListPreference
+            android:entries="@array/pref_log_level_list_title"
+            android:entryValues="@array/pref_log_level_list_values"
+            android:key="@string/pref_log_level_key"
+            android:summary="@string/pref_log_level_summary"
+            android:title="@string/pref_log_level" />
+        <EditTextPreference
+            android:key="send_data_interval"
+            android:title="@string/send_data_interval"
+            android:defaultValue="@integer/default_send_data_interval"
+            android:selectAllOnFocus="true"
+            android:dialogTitle="@string/send_data_interval_dialog"
+            app:useSimpleSummaryProvider="true"/>
+        <EditTextPreference
+            android:key="unit_id"
+            android:title="@string/unit_id"
+            android:selectAllOnFocus="true"
+            android:dialogTitle="@string/unit_id_dialog"
+            app:useSimpleSummaryProvider="true"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/debug_setting">
+        <SwitchPreferenceCompat
+            android:key="logging_ble_scan"
+            android:title="@string/logging_ble_scan"
+            android:defaultValue="@bool/default_logging_ble_scan"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

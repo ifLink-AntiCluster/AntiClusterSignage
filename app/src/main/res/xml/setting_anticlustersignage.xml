@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<iflink>
+    <language name="jp">
+        <ims
+            name="AntiClusterサイネージ IMS設定メニュー"
+            category="CustomIMS"
+            key="config_anticlustersignagedevice_name"
+            value="AntiClusterSignageService">
+            <condition name="BLE設定">
+                <property
+                    name="スキャンモード"
+                    datatype="string"
+                    default="0"
+                    key="scan_mode"
+                    option="Low power : 0.5秒スキャン→4.5秒待つを繰り返し,Balanced : 2秒スキャン→3秒待つを繰り返し,Low latency : ずっとスキャンします"
+                    type="radio"
+                    value="0,1,2" />
+            </condition>
+            <condition name="3mの推定基準">
+                <property
+                    name="電波強度"
+                    datatype="int"
+                    default="-65"
+                    key="rssi_near"
+                    type="text"
+                    unit="dBm" />
+            </condition>
+            <condition name="10mの推定基準">
+                <property
+                    name="電波強度"
+                    datatype="int"
+                    default="-85"
+                    key="rssi_around"
+                    type="text"
+                    unit="dBm" />
+            </condition>
+            <condition name="IMS設定">
+                <property
+                    name="ログ出力レベル"
+                    datatype="string-array"
+                    default=""
+                    key="loglevel"
+                    option="ifLink I/F デバイスログ,ifLink I/F IMSログ,IMS デバイスログ,IMS サービスログ"
+                    type="checkbox"
+                    unit="複数選択"
+                    value="DEVICE-CONNECTOR,IFLINK-CONNECTOR,CUSTOM-DEV,CUSTOM-IMS" />
+                <property
+                    name="データ送信間隔"
+                    datatype="int"
+                    default="30"
+                    key="send_data_interval"
+                    type="text"
+                    unit="秒" />
+            </condition>
+            <condition name="IMS設定 - 識別情報">
+                <property
+                    name="端末識別用ID"
+                    datatype="string"
+                    default=""
+                    key="unit_id"
+                    type="text" />
+            </condition>
+            <condition name="グラフ設定">
+                <property
+                    name="Ｙ軸の最小値"
+                    datatype="int"
+                    default="100"
+                    key="graph_min_y"
+                    type="text"
+                    unit="人" />
+                <property
+                    name="描画開始時刻"
+                    datatype="int"
+                    default="9"
+                    key="graph_start_hour"
+                    type="text"
+                    unit="時" />
+            </condition>
+        </ims>
+    </language>
+    <language name="en">
+        <ims
+            name="AntiCluster Signage IMS Settings"
+            category="CustomIMS"
+            key="setting_activity"
+            value="AntiClusterSignageService">
+            <condition name="BLE Setting">
+                <property
+                    name="Scan Mode"
+                    datatype="string"
+                    default="0"
+                    key="scan_mode"
+                    option="Low power : scans for 0.5 sec and pauses 4.5 sec,Balanced : scans for 2 sec and pauses 3 seconds,Low latency : scans continuously"
+                    type="radio"
+                    value="0,1,2" />
+            </condition>
+            <condition name="Estimation criteria of 3 meters">
+                <property
+                    name="Radio wave strength"
+                    datatype="int"
+                    default="-65"
+                    key="rssi_near"
+                    type="text"
+                    unit="dBm" />
+            </condition>
+            <condition name="Estimation criteria of 10 meters">
+                <property
+                    name="Radio wave strength"
+                    datatype="int"
+                    default="-85"
+                    key="rssi_around"
+                    type="text"
+                    unit="dBm" />
+            </condition>
+            <condition name="IMS Setting">
+                <property
+                    name="Log output target"
+                    datatype="string-array"
+                    default=""
+                    key="loglevel"
+                    option="ifLink I/F Device log,ifLink I/F IMS log,IMS Device log,IMS Service log"
+                    type="checkbox"
+                    unit="multiple choice"
+                    value="DEVICE-CONNECTOR,IFLINK-CONNECTOR,CUSTOM-DEV,CUSTOM-IMS" />
+                <property
+                    name="Send Data Interval"
+                    datatype="int"
+                    default="30"
+                    key="send_data_interval"
+                    type="text"
+                    unit="seconds" />
+            </condition>
+            <condition name="IMS Setting - Identification Info">
+                <property
+                    name="Terminal ID"
+                    datatype="string"
+                    default=""
+                    key="unit_id"
+                    type="text" />
+            </condition>
+            <condition name="Graph Setting">
+                <property
+                    name="Minimum Y-axis value"
+                    datatype="int"
+                    default="100"
+                    key="graph_min_y"
+                    type="text"
+                    unit="peoples" />
+                <property
+                    name="Start hour"
+                    datatype="int"
+                    default="9"
+                    key="graph_start_hour"
+                    type="text"
+                    unit="o'clock" />
+            </condition>
+        </ims>
+    </language>
+</iflink>

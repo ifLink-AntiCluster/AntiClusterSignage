@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<iflink>
+    <language name="jp">
+        <device
+            name="AntiClusterサイネージ"
+            dataitem="sample"
+            icon="anticlustersignage.png"
+            key="devicename"
+            value="jp.iflink.anticluster_signage:AntiClusterSignage:1">
+            <if>
+                <condition
+                    name="3m以内カウント値が閾値を上回ったら"
+                    icon="notification.png"
+                    interface="sample"
+                    key="dataname"
+                    value="near">
+                    <property
+                        name="判断"
+                        datatype="string"
+                        key="compare"
+                        type="hidden"
+                        value="ge" />
+                    <property
+                        name="閾値"
+                        datatype="int"
+                        default="0"
+                        key="value"
+                        max="2147483647"
+                        min="0"
+                        type="text" />
+                </condition>
+                <condition
+                    name="3~10mカウント値が閾値を上回ったら"
+                    icon="notification.png"
+                    interface="sample"
+                    key="dataname"
+                    value="around">
+                    <property
+                        name="判断"
+                        datatype="string"
+                        key="compare"
+                        type="hidden"
+                        value="ge" />
+                    <property
+                        name="閾値"
+                        datatype="int"
+                        default="0"
+                        key="value"
+                        max="2147483647"
+                        min="0"
+                        type="text" />
+                </condition>
+                <condition
+                    name="10m以内カウント値が閾値を上回ったら"
+                    icon="notification.png"
+                    interface="sample"
+                    key="dataname"
+                    value="active">
+                    <property
+                        name="判断"
+                        datatype="string"
+                        key="compare"
+                        type="hidden"
+                        value="ge" />
+                    <property
+                        name="閾値"
+                        datatype="int"
+                        default="0"
+                        key="value"
+                        max="2147483647"
+                        min="0"
+                        type="text" />
+                </condition>
+                <condition
+                    name="10m以上カウント値が閾値を上回ったら"
+                    icon="notification.png"
+                    interface="sample"
+                    key="dataname"
+                    value="far">
+                    <property
+                        name="判断"
+                        datatype="string"
+                        key="compare"
+                        type="hidden"
+                        value="ge" />
+                    <property
+                        name="閾値"
+                        datatype="int"
+                        default="0"
+                        key="value"
+                        max="2147483647"
+                        min="0"
+                        type="text" />
+                </condition>
+            </if>
+        </device>
+    </language>
+    <language name="en">
+        <device
+            name="AntiClusterSignage"
+            dataitem="sample"
+            icon="anticlustersignage.png"
+            key="devicename"
+            value="jp.iflink.anticluster_signage:AntiClusterSignage:1">
+            <if>
+                <condition
+                    name="When the count of 3m or less exceeds the threshold value"
+                    icon="notification.png"
+                    interface="sample"
+                    key="dataname"
+                    value="near">
+                    <property
+                        name="Judgment"
+                        datatype="string"
+                        key="compare"
+                        type="hidden"
+                        value="ge" />
+                    <property
+                        name="Threshold"
+                        datatype="int"
+                        default="0"
+                        key="value"
+                        max="2147483647"
+                        min="0"
+                        type="text" />
+                </condition>
+                <condition
+                    name="When the count of 3 to 10m exceeds the threshold value"
+                    icon="notification.png"
+                    interface="sample"
+                    key="dataname"
+                    value="around">
+                    <property
+                        name="Judgment"
+                        datatype="string"
+                        key="compare"
+                        type="hidden"
+                        value="ge" />
+                    <property
+                        name="Threshold"
+                        datatype="int"
+                        default="0"
+                        key="value"
+                        max="2147483647"
+                        min="0"
+                        type="text" />
+                </condition>
+
+                <condition
+                    name="When the count of 10m or less exceeds the threshold value"
+                    icon="notification.png"
+                    interface="sample"
+                    key="dataname"
+                    value="active">
+                    <property
+                        name="Judgment"
+                        datatype="string"
+                        key="compare"
+                        type="hidden"
+                        value="ge" />
+                    <property
+                        name="Threshold"
+                        datatype="int"
+                        default="0"
+                        key="value"
+                        max="2147483647"
+                        min="0"
+                        type="text" />
+                </condition>
+                <condition
+                    name="When the count over 10m exceeds the threshold value"
+                    icon="notification.png"
+                    interface="sample"
+                    key="dataname"
+                    value="far">
+                    <property
+                        name="Judgment"
+                        datatype="string"
+                        key="compare"
+                        type="hidden"
+                        value="ge" />
+                    <property
+                        name="Threshold"
+                        datatype="int"
+                        default="0"
+                        key="value"
+                        max="2147483647"
+                        min="0"
+                        type="text" />
+                </condition>
+            </if>
+        </device>
+    </language>
+
+    <schema name="anticlustersignage">
+        <property name="devicename" type="string" />
+        <property name="deviceserial" type="string" />
+        <property name="timestamp"  type="timestamp" />
+        <!-- デバイス固有設定 Start -->
+        <property name="near" type="int" />
+        <property name="around" type="int" />
+        <property name="active" type="int" />
+        <property name="far" type="int" />
+        <property name="unit_id" type="string" />
+        <!-- デバイス固有設定 End -->
+    </schema>
+</iflink>

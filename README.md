@@ -1,4 +1,4 @@
-## About ifLink Anti Cluster Signage
+## About ifLink AntiCluster Signage
 
 English text follows the Japanese text.
 
@@ -49,7 +49,7 @@ Advertisingパケットをスキャンするタイミングおよび電波強度
 - 「検出」は、検出したデバイスの重複のない数です。（10分毎にクリア）
 - 「対象」は、検出からスマートフォンでないと判定されたデバイスを除外した数です。（10分毎にクリア）
 - 「累計」は、対象の数と濃厚接触判定（3m以内で15分継続）した数を保持しています。実際の判定はこちらで行われます。
-<br>
+
 なお、カウントのロジックはAntiClusterと同様となっている為、0～3mは濃厚接触＋至近距離判定の値を表示しています。<br>
 
 ## Depends
@@ -57,7 +57,7 @@ Advertisingパケットをスキャンするタイミングおよび電波強度
 - Gson
 - MPAndroid Chart
 
-Android OS 8.0以降に対応しています。
+Android OS 7.0以降に対応しています。
 
 ## Sample Application
 ソースコードをビルドしたサンプルアプリケーションを登録しています。<br>
@@ -127,10 +127,10 @@ The default estimation criterion for 10 meters is -85 dBm or higher.
 ## For debugging
 There are 2 functions for debugging; output log of scanned devices and draw the number of scanned devices held internally.<br>
 <br>
-"検出" is the number of unduplicated scanned devices. (will be cleared every 10 minutes)<br>
-"対象" is the number from "検出" that excludes devices determined not to be smartphones. (will be cleared every 10 minutes)<br>
-"累計" is the number of "対象" and the number of determined as "close contact" (criteria: within 3 meters and keep 15 minutes).<br>
-The actual calculation is made on "累計" basis.<br>
+"SCN" is the number of unduplicated scanned devices. (will be cleared every 10 minutes)<br>
+"CNT" is the number from "SCN" that excludes devices determined not to be smartphones. (will be cleared every 10 minutes)<br>
+"TTL" is the number of "CNT" and the number of determined as "close contact" (criteria: within 3 meters and keep 15 minutes).<br>
+The actual calculation is made on "TTL" basis.<br>
 <br>
 Since the logic of the count is the same as for AntiCluster, "within 3 meters" meens the count of "close contact" + "close proximity".
 
@@ -139,7 +139,7 @@ The following libraries are used in this app.
 - Gson
 - MPAndroid Chart
 
-Compatible with Android OS 8.0 or later.
+Compatible with Android OS 7.0 or later.
 
 ## Sample Application
 Here is a sample applicaiotn apk which built from the source code.<br>

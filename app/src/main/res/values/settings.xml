@@ -1,0 +1,21 @@
+<resources>
+    <!-- IMS識別子設定 -->
+    <string name="ims_device_name" translatable="false">jp.iflink.anticluster_signage:AntiClusterSignage:1</string>
+    <string name="ims_device_serial" translatable="false">epa</string>
+    <string name="ims_schema_name" translatable="false">anticlustersignage</string>>
+    <string name="ims_asset_name" translatable="false">ANTICLUSTERSIGNAGE_EPA</string>
+    <!-- デフォルト値設定 -->
+    <string name="default_scan_mode" translatable="false">0</string>
+    <integer name="default_rssi_near">-65</integer>
+    <integer name="default_rssi_around">-85</integer>
+    <integer name="default_alert_timer">15</integer>
+    <bool name="default_logging_ble_scan">false</bool>
+    <integer name="default_update_time">5</integer>
+    <string name="default_scan_method" translatable="false">1</string>
+    <integer name="default_update_per_minutes">1</integer>
+    <bool name="default_runin_background">false</bool>
+    <integer name="default_graph_min_y">100</integer>
+    <integer name="default_graph_start_hour">9</integer>
+    <integer name="default_graph_count_hours">12</integer>
+    <integer name="default_send_data_interval">30</integer>
+</resources>

@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">AntiCluster Signage</string>
+    <!-- メニュー -->
+    <string name="menu_setting">設定</string>
+    <string name="setting_activity">AntiClusterSignage IMS設定メニュー</string>
+    <!-- メイン画面 -->
+    <string name="recordtime">前回集計時刻</string>
+    <string name="monitoring_title">この周辺の\n密集状況</string>
+    <string name="attention_title">Keep Social Distance!</string>
+    <string name="near_title">0～3m</string>
+    <string name="around_title">3～10 m"</string>
+    <string name="far_title">10m～</string>
+    <string name="count_unit_text">人</string>
+    <integer name="count_unit_size">20</integer>
+    <string name="description_footer">スマートフォンのBluetooth信号をカウントして人数を推定しています</string>
+    <string name="count_detail1">検出</string>
+    <string name="count_detail2">対象</string>
+    <string name="count_detail3">累計</string>
+    <!-- 設定画面 -->
+    <string name="ble_settings">●BLE設定</string>
+    <string name="scan_mode">スキャンモード</string>
+    <string-array name="scan_mode_entries">
+        <item>Low power : 0.5秒スキャン→4.5秒待つを繰り返し</item>
+        <item>Balanced : 2秒スキャン→3秒待つを繰り返し</item>
+        <item>Low latency : ずっとスキャンします</item>
+    </string-array>
+    <string-array name="scan_mode_entryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string name="alert_judge_line">●3mの推定基準</string>
+    <string name="rssi_value">電波強度 [dBm]</string>
+    <string name="continuous_time">継続時間 [分]</string>
+    <string name="rssi_value_dialog">電波強度: 指定した[dBm]以上で判定</string>
+    <string name="continuous_time_dialog">継続時間: 指定した[分]以上で判定</string>
+    <string name="around_judge_line">●10mの推定基準</string>
+    <string name="logging_ble_scan">アプリケーションのログを残す</string>
+    <string name="behavior_setting">●動作設定</string>
+    <string name="screen_update_interval">描画更新間隔 [秒]</string>
+    <string name="screen_update_interval_dialog">画面の描画を更新する間隔</string>
+    <string name="runin_background">バックグラウンドで動作</string>
+    <string name="graph_setting">●グラフ設定</string>
+    <string name="graph_min_y">Ｙ軸の最小値</string>
+    <string name="graph_min_y_dialog">最小限描画するY軸(カウント値)の高さ</string>
+    <string name="graph_start_hour">描画開始時刻[時]</string>
+    <string name="graph_count_hours">描画期間[時間] ※対応中</string>
+    <string name="ims_setting">●IMS設定</string>
+    <string name="pref_log_level">ログ出力対象</string>
+    <string name="pref_log_level_key" translatable="false">loglevel</string>
+    <string name="pref_log_level_summary">ログ出力対象を選択します。</string>
+    <string-array name="pref_log_level_list_title">
+        <item>ifLink I/F デバイスログ</item>
+        <item>ifLink I/F IMSログ</item>
+        <item>IMS デバイスログ</item>
+        <item>IMS サービスログ</item>
+    </string-array>
+    <string name="send_data_interval">データ送信間隔 [秒]</string>
+    <string name="send_data_interval_dialog">データを送信する間隔</string>
+    <string name="unit_id">端末識別用ID</string>
+    <string name="unit_id_dialog">端末識別するためのID</string>
+    <string name="debug_setting">●デバッグ用</string>
+    <string name="draw_count_detail">カウント詳細描画</string>
+    <!-- メッセージ -->
+    <string name="data_load_fail">データの読み込みに失敗しました</string>
+    <string name="data_save_fail">データの保存に失敗しました</string>
+    <!-- Fragment Label -->
+    <string name="home_fragment_label">Home</string>
+    <string name="setting_fragment_label">Setting</string>
+</resources>

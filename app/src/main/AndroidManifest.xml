@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="jp.iflink.anticluster_signage">
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="LockedOrientationActivity">
+        <activity
+            android:name="jp.iflink.anticluster_signage.FullscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- IMS PermissionActivity -->
+        <!--<activity android:name="jp.co.toshiba.iflink.ui.PermissionActivity" />-->
+        <!-- IMS SettingsActivity -->
+        <activity
+            android:name="jp.iflink.anticluster_signage.ims.DeviceSettingsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/setting_activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="jp.co.toshiba.iflink.AndroidService" />
+            </intent-filter>
+        </activity>
+        <!-- Micro Service -->
+        <service
+            android:name="jp.iflink.anticluster_signage.ims.AntiClusterSignageIms"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="jp.co.toshiba.iflink.AndroidService" />
+                <action android:name="jp.iflink.anticluster_signage.ims.AntiClusterSignageIms" />
+            </intent-filter>
+            <meta-data
+                android:name="serviceName"
+                android:value="AntiClusterSignageService" />
+            <meta-data
+                android:name="description"
+                android:value="ifLink AntiCluster Signage Micro Service." />
+        </service>
+
+    </application>
+</manifest>

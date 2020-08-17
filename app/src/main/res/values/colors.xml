@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="monitoring_title">#D95E7B</color>
+    <color name="attention_title">#69ABB0</color>
+    <color name="near">#D95E7B</color>
+    <color name="around">#5EA5AA</color>
+    <color name="far">#A2CBCE</color>
+    <color name="noData">#000000</color>
+
+    <color name="black_overlay">#66000000</color>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema name="anticlustersignage">
+    <property name="devicename" type="string" />
+    <property name="deviceserial" type="string" />
+    <property name="timestamp"  type="timestamp" />
+    <!-- デバイス固有設定 Start -->
+    <property name="near" type="int" />
+    <property name="around" type="int" />
+    <property name="active" type="int" />
+    <property name="far" type="int" />
+    <property name="unit_id" type="string" />
+    <!-- デバイス固有設定 End -->
+</schema>

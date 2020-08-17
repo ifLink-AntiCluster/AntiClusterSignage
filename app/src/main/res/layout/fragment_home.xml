@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:layout_editor_absoluteX="1dp"
+    tools:layout_editor_absoluteY="1dp"
+    tools:context=".ui.HomeFragment">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        android:src="@drawable/background" />
+
+    <TextView
+        android:id="@+id/tv_version"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="3dp"
+        android:textColor="#000000"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        tools:text="X.X.X" />
+
+    <LinearLayout
+        android:id="@+id/chart_graph_block"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart_graph"
+            android:layout_width="385dp"
+            android:layout_height="100dp"
+            android:visibility="visible">
+
+        </com.github.mikephil.charting.charts.BarChart>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tv_recordtime_block"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="100dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/tv_recordtime_prefix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/recordtime"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_recordtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HH:MM"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_near"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="415dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="999"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/near"
+        android:textSize="84sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_around"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="225dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="999"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/around"
+        android:textSize="66sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_far"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="145dp"
+        android:layout_marginEnd="65dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="999"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/far"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp"
+        app:backgroundTint="@android:color/transparent"
+        app:elevation="0dp"
+        app:borderWidth="0dp"
+        app:fabSize="mini" />
+
+    <TableLayout
+        android:id="@+id/tbl_count_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="260dp"
+        android:layout_marginEnd="90dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border"
+            android:gravity="end">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:backgroundTint="#FFF8E1"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/count_detail1"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:backgroundTint="#FFF8E1"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/count_detail2"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:backgroundTint="#FFF8E1"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/count_detail3"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border">
+
+            <TextView
+                android:id="@+id/tv_alldevice_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textSize="12sp"
+                android:textStyle="normal"
+                tools:text="999" />
+
+            <TextView
+                android:id="@+id/tv_device_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textSize="12sp"
+                android:textStyle="normal"
+                tools:text="999" />
+
+            <TextView
+                android:id="@+id/tv_scan_device_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textSize="12sp"
+                android:textStyle="normal"
+                tools:text="999" />
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

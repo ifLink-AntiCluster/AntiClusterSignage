@@ -10,6 +10,7 @@ English text follows the Japanese text.
 スマートフォンがBluetooth機器接続のために発信しているAdvertisingパケットを受信し、<br>
 電波強度に応じて「3m以内」「3～10m」「10m以上」の判定を行い、近接しているデバイスの数をカウントします。<br>
 カウントの現在値は10分毎に集計・クリアされ、10m以下の値がリアルタイムにグラフに描画されます。<br>
+このアプリは単独でも動作しますが、ifLinkがインストールされている場合、IFのIMSとして一定間隔でデータを送信します。
 
 ## Screenshots
 <img src="screenshot/Screenshot_home.png" width="240" alt="Screenshot"/>
@@ -29,9 +30,9 @@ Gradleビルドシステムを使用しています。
 BluetoothをONにして使用してください。<br>
 アプリを起動している間、Bluetooth機器のAdvertisingパケットをスキャンし、カウントします。<br>
 アプリを終了するとカウントも停止しますが、設定画面にてバックグラウンドで動作を継続できるように変更できます。<br>
-設定画面には、右下のツールボタンをタップすると遷移できます。<br>
+設定画面には、画面右上の端をタップすると遷移できます。<br>
 <br>
-カウント値は2週間分記録されますが、グラフに描画されるのは当日午前9時から12時間分となります。
+カウント値は2週間分記録されていますが、グラフに描画されるのは当日午前9時から12時間分となります。
 描画開始時刻は設定画面にて変更可能です。
 また、グラフY軸の最小値は100となっていますが、こちらも設定画面にて変更可能です。
 <br>
@@ -42,6 +43,28 @@ Advertisingパケットをスキャンするタイミングおよび電波強度
 電波強度に応じた距離判定の閾値も、設定画面で変更可能です。<br>
 3mの推定基準は、初期設定では-65dBm以上です。<br>
 10mの推定基準は、初期設定では-85dBm以上です。<br>
+
+## Usage for IfLink MicroService
+デバイスサービスの登録には、以下のXMLファイルをご利用ください。<br>
+[app/src/main/res/xml/device_service_anticlustersignage.xml](https://github.com/ifLink-AntiCluster/AntiClusterSignage/raw/master/app/src/main/res/xml/device_service_anticlustersignage.xml)
+
+デバイスサービスは「AntiClusterサイネージ」で登録されます。IF条件として、以下が指定可能です。
+* 3m以内カウント値が閾値を上回ったら
+* 3～10mカウント値が閾値を上回ったら
+* 10m以内カウント値が閾値を上回ったら
+* 10m以上カウント値が閾値を上回ったら
+
+IMS設定の配信には、以下のXMLファイルをご利用ください。<br>
+[app/src/main/res/xml/setting_anticlustersignage.xml](https://github.com/ifLink-AntiCluster/AntiClusterSignage/raw/master/app/src/main/res/xml/setting_anticlustersignage.xml)
+
+送信データは以下の通りです。
+* near … 3m以内（0～3m）カウント値
+* around … 3～10mカウント値
+* active … 10m以内カウント値。near+aroundの値となります。
+* far … 10m以上(10m～)カウント値
+* unit_id … 端末識別用ID。設定画面から指定可能です。
+
+データ送信の間隔はデフォルトで30秒ですが、設定画面で変更可能です。
 
 ## For debugging
 デバッグ用に、スキャンしたデバイスのログを出力する機能と、<br>
@@ -61,7 +84,7 @@ Android OS 7.0以降に対応しています。
 
 ## Sample Application
 ソースコードをビルドしたサンプルアプリケーションを登録しています。<br>
-[SampleApplication](https://github.com/ifLink-AntiCluster/AntiClusterSignage/raw/master/SampleApplication/anticluster_signage_v1.0.0.apk)
+[SampleApplication/anticluster_signage_v1.0.0.apk](https://github.com/ifLink-AntiCluster/AntiClusterSignage/raw/master/SampleApplication/anticluster_signage_v1.0.0.apk)
 
 ## Community
 リクエスト、質問、バグリポートがある場合、GitHubのissue機能を使用して下さい。
@@ -91,6 +114,7 @@ This is an IMS (ifLink MicroService) application designed specifically for the c
 It receives the Advertising packets that the smartphone is sending out to connect to the Bluetooth device <br>
 and counts the number of devices in close proximity by judging "within 3 meters", "between 3 to 10 meters" and "over 10 meters" according to the radio wave strength.<br>
 The current value of the count is tallied and cleared every 10 minutes, and the value within 10 meters is drawn on the graph in real time.
+The app can work on its own, but when the ifLink was installed, it will send data at regular intervals as an IMS for IF.
 
 ## Screenshots
 <img src="screenshot/Screenshot_home.png" width="240" alt="Screenshot"/>
@@ -110,9 +134,9 @@ The Gradle build system is used.
 Please turn on the Bluetooth to use.<br>
 While the app is running, it scans and counts the Advertising packets of Bluetooth devices.<br>
 When you exit the app, also the count will stop on default. if you want to run in background, you can change it by the setting screen.<br>
-To go to the setting screen, tap a tool button at the bottom right of the screen.<br>
+To go to the setting screen, tap the top right corner of the screen.<br>
 <br>
-The count values are recorded for two weeks, but they are drawn on the graph for 12 hours from 9:00 a.m. that day.
+The count values have been recorded for two weeks, but they are drawn on the graph for 12 hours from 9:00 a.m. that day.
 The drawing start time (9:00 a.m.) can be changed on the setting screen.
 The minimum value for the Y axis of the graph is 100, but this can also be changed on the settings screen.
 <br>
@@ -123,6 +147,9 @@ The default setting is Low power (scan once every 5 seconds for 0.5 seconds), bu
 Thresholds of distance determination based on the radio wave strength can be changed on the setting screen.<br>
 The default estimation criterion for 3 meters is -65 dBm or higher.<br>
 The default estimation criterion for 10 meters is -85 dBm or higher.
+
+## Usage for IfLink MicroService
+* now translating and it will be available soon.
 
 ## For debugging
 There are 2 functions for debugging; output log of scanned devices and draw the number of scanned devices held internally.<br>
@@ -143,7 +170,7 @@ Compatible with Android OS 7.0 or later.
 
 ## Sample Application
 Here is a sample applicaiotn apk which built from the source code.<br>
-[SampleApplication](https://github.com/ifLink-AntiCluster/AntiClusterSignage/raw/master/SampleApplication/anticluster_signage_v1.0.0.apk)
+[SampleApplication/anticluster_signage_v1.0.0.apk](https://github.com/ifLink-AntiCluster/AntiClusterSignage/raw/master/SampleApplication/anticluster_signage_v1.0.0.apk)
 
 ## Community
 If you have a request, question, or bug report, please use the issue feature on GitHub.

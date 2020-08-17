@@ -79,6 +79,9 @@ IMS設定の配信には、以下のXMLファイルをご利用ください。<b
 このアプリでは以下のライブラリを使用しています。
 - Gson
 - MPAndroid Chart
+- ifLink コアライブラリ
+- ifLink IMSライブラリ
+- ifLink UIユーティリティライブラリ
 
 Android OS 7.0以降に対応しています。
 
@@ -165,6 +168,9 @@ Since the logic of the count is the same as for AntiCluster, "within 3 meters" m
 The following libraries are used in this app.
 - Gson
 - MPAndroid Chart
+- ifLink Core Library
+- ifLink IMS Library
+- ifLink UI Utility Library
 
 Compatible with Android OS 7.0 or later.
 

@@ -3,7 +3,7 @@
     <language name="jp">
         <device
             name="AntiClusterサイネージ"
-            dataitem="sample"
+            dataitem="near,around,active,far,unit_id"
             icon="anticlustersignage.png"
             key="devicename"
             value="jp.iflink.anticluster_signage:AntiClusterSignage:1">
@@ -11,7 +11,7 @@
                 <condition
                     name="3m以内カウント値が閾値を上回ったら"
                     icon="notification.png"
-                    interface="sample"
+                    interface="BLE"
                     key="dataname"
                     value="near">
                     <property
@@ -32,7 +32,7 @@
                 <condition
                     name="3~10mカウント値が閾値を上回ったら"
                     icon="notification.png"
-                    interface="sample"
+                    interface="BLE"
                     key="dataname"
                     value="around">
                     <property
@@ -53,7 +53,7 @@
                 <condition
                     name="10m以内カウント値が閾値を上回ったら"
                     icon="notification.png"
-                    interface="sample"
+                    interface="BLE"
                     key="dataname"
                     value="active">
                     <property
@@ -74,7 +74,7 @@
                 <condition
                     name="10m以上カウント値が閾値を上回ったら"
                     icon="notification.png"
-                    interface="sample"
+                    interface="BLE"
                     key="dataname"
                     value="far">
                     <property
@@ -98,7 +98,7 @@
     <language name="en">
         <device
             name="AntiClusterSignage"
-            dataitem="sample"
+            dataitem="near,around,active,far,unit_id"
             icon="anticlustersignage.png"
             key="devicename"
             value="jp.iflink.anticluster_signage:AntiClusterSignage:1">
@@ -106,7 +106,7 @@
                 <condition
                     name="When the count of 3m or less exceeds the threshold value"
                     icon="notification.png"
-                    interface="sample"
+                    interface="BLE"
                     key="dataname"
                     value="near">
                     <property
@@ -127,7 +127,7 @@
                 <condition
                     name="When the count of 3 to 10m exceeds the threshold value"
                     icon="notification.png"
-                    interface="sample"
+                    interface="BLE"
                     key="dataname"
                     value="around">
                     <property
@@ -149,7 +149,7 @@
                 <condition
                     name="When the count of 10m or less exceeds the threshold value"
                     icon="notification.png"
-                    interface="sample"
+                    interface="BLE"
                     key="dataname"
                     value="active">
                     <property
@@ -170,7 +170,7 @@
                 <condition
                     name="When the count over 10m exceeds the threshold value"
                     icon="notification.png"
-                    interface="sample"
+                    interface="BLE"
                     key="dataname"
                     value="far">
                     <property

@@ -204,12 +204,19 @@ public class DataStore {
                 }
             }
             for (int idx=0; idx<counterInfo.length; idx++){
-                if (counterInfo[idx] == null ){
+                if (counterInfo[idx] == null){
                     // 基準日時の時間[HOUR]を取得する
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(baseDate);
-                    int hour = cal.get(Calendar.HOUR_OF_DAY);
-                    if (idx < hour) {
+                    int hour = idx/6 + START_HOUR;
+                    int minute = (idx%6) * 10;
+                    Calendar counterDate = Calendar.getInstance();
+                    if (hour < 24){
+                        counterDate.set(Calendar.HOUR_OF_DAY, hour);
+                    } else {
+                        counterDate.add(Calendar.DATE, 1);
+                        counterDate.set(Calendar.HOUR_OF_DAY, hour-24);
+                    }
+                    counterDate.set(Calendar.MINUTE, minute);
+                    if (counterDate.getTime().before(baseDate)) {
                         // 過去の無実行時間のデータは-1に設定する
                         counterInfo[idx] = new CounterDevice();
                         counterInfo[idx].mAlertCounter = -1;

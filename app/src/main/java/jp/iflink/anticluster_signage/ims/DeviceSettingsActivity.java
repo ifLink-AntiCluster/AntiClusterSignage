@@ -6,13 +6,14 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 
 import jp.co.toshiba.iflink.ui.BaseSettingsActivity;
+import jp.iflink.anticluster_signage.BuildConfig;
 import jp.iflink.anticluster_signage.R;
 
 public class DeviceSettingsActivity extends BaseSettingsActivity {
     /**
      * Preferences名.
      */
-    public static final String PREFERENCE_NAME = "jp.iflink.anticluster_signage" + "_preferences";
+    public static final String PREFERENCE_NAME = BuildConfig.APPLICATION_ID+ "_preferences";
 
     @Override
     protected final int getPreferencesResId() {
@@ -22,7 +23,6 @@ public class DeviceSettingsActivity extends BaseSettingsActivity {
     @NonNull
     @Override
     protected final String getPreferencesName() {
-        //return getClass().getPackage().getName() + "_preferences";
         return PREFERENCE_NAME;
     }
 

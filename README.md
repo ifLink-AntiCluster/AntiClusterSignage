@@ -1,6 +1,6 @@
 ## About ifLink AntiCluster Signage
 
-[English text follows the Japanese text.]#overview-1
+[English text follows the Japanese text.](#overview-1)
 
 ## Overview
 スマートフォンが発信する電波を利用して近接をカウントするアプリである、AntiClusterを

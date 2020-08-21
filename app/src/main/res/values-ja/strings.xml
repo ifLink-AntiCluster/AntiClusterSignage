@@ -24,11 +24,6 @@
         <item>Balanced : 2秒スキャン→3秒待つを繰り返し</item>
         <item>Low latency : ずっとスキャンします</item>
     </string-array>
-    <string-array name="scan_mode_entryValues">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
     <string name="alert_judge_line">●3mの推定基準</string>
     <string name="rssi_value">電波強度 [dBm]</string>
     <string name="continuous_time">継続時間 [分]</string>
@@ -40,6 +35,13 @@
     <string name="screen_update_interval">描画更新間隔 [秒]</string>
     <string name="screen_update_interval_dialog">画面の描画を更新する間隔</string>
     <string name="runin_background">バックグラウンドで動作</string>
+    <string name="count_period_type">画面表示するカウント</string>
+    <string name="count_period_type_dialog">画面表示・データ送信するカウントを選択</string>
+    <string-array name="count_period_type_entries">
+        <item>10分毎にリセットされるカウント（グラフの値と同じ）</item>
+        <item>直近から集計間隔[分]のカウント</item>
+    </string-array>
+    <string name="count_period_minutes">集計間隔 [分]</string>
     <string name="graph_setting">●グラフ設定</string>
     <string name="graph_min_y">Ｙ軸の最小値</string>
     <string name="graph_min_y_dialog">最小限描画するY軸(カウント値)の高さ</string>

@@ -38,6 +38,7 @@ import java.util.TimerTask;
 import jp.iflink.anticluster_signage.BuildConfig;
 import jp.iflink.anticluster_signage.R;
 import jp.iflink.anticluster_signage.ims.AntiClusterSignageIms;
+import jp.iflink.anticluster_signage.setting.CountPeriodType;
 import jp.iflink.anticluster_signage.task.BleScanTask;
 import jp.iflink.anticluster_signage.util.DataStore;
 import jp.iflink.anticluster_signage.util.GraphManager;
@@ -75,6 +76,7 @@ public class HomeFragment extends Fragment implements IServiceFragment {
     // 各種設定値
     private int mUpdateTime;
     private boolean mDrawCountDetail;
+    private int countPeriodType;
     // 画面更新用タイマー
     private Timer screenUpdateTimer;
     // データ集計用タイマー
@@ -268,6 +270,7 @@ public class HomeFragment extends Fragment implements IServiceFragment {
         Resources rsrc = getResources();
         mUpdateTime = getIntFromString(prefs, "update_time", rsrc.getInteger(R.integer.default_update_time));
         mDrawCountDetail = getBoolean(prefs,"draw_count_detail", false);
+        countPeriodType = Integer.parseInt(prefs.getString("count_period_type", rsrc.getString(R.string.default_count_period_type)));
 
         if (mDrawCountDetail){
             // カウント詳細を表示
@@ -295,9 +298,17 @@ public class HomeFragment extends Fragment implements IServiceFragment {
                                 return;
                             }
                             // カウント表示の更新
-                            mNearCount.setText(String.valueOf(bleService.getNearCount()));
-                            mAroundCount.setText(String.valueOf(bleService.getAroundCount()));
-                            mFarCount.setText(String.valueOf(bleService.getFarCount()));
+                            if (countPeriodType == CountPeriodType.ABSOLUTE) {
+                                mNearCount.setText(String.valueOf(bleService.getNearCount()));
+                                mAroundCount.setText(String.valueOf(bleService.getAroundCount()));
+                                mFarCount.setText(String.valueOf(bleService.getFarCount()));
+                            } else if (countPeriodType == CountPeriodType.RELATIVE){
+                                mNearCount.setText(String.valueOf(bleService.getCurrentNearCount()));
+                                mAroundCount.setText(String.valueOf(bleService.getCurrentAroundCount()));
+                                mFarCount.setText(String.valueOf(bleService.getCurrentFarCount()));
+                            } else {
+                                Log.e(TAG, "countPeriodType is unknown");
+                            }
                             // カウント詳細の描画
                             if (mDrawCountDetail){
                                 mAllDeviceCount.setText(String.valueOf(bleService.getAllDeviceCount()));

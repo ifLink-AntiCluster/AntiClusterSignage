@@ -49,6 +49,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import jp.iflink.anticluster_signage.R;
+import jp.iflink.anticluster_signage.model.CountType;
 import jp.iflink.anticluster_signage.model.CounterDevice;
 import jp.iflink.anticluster_signage.model.ScannedDevice;
 import jp.iflink.anticluster_signage.setting.UpdateMethod;
@@ -94,6 +95,7 @@ public class BleScanTask implements Runnable {
 
     private FileHandler fileHandler;
 
+    private static final int SUMMARY_TIMER = 10;
     private ScheduledFuture<?> routine1mFuture;
     private ScheduledFuture<?> routine10mFuture;
     private ScheduledExecutorService routineScheduler;
@@ -120,32 +122,55 @@ public class BleScanTask implements Runnable {
     // update method and per minutes
     private int mUpdateMethod;
     private int mUpdatePerMinutes;
+    // count period minutes
+    private AtomicInteger mCountPeriodMinutes = new AtomicInteger(0);
 
     @Override
     public void run(){
-        // 保存日時[Hour単位]を読み込み
-        int Saved_time = Integer.parseInt( prefs.getString("Saved_time","0"));
-        if( (Integer.parseInt(getSystemTime()) - Saved_time) < 1){
-            // 同一時間[Hour]の場合は、デバイス一覧を読み込み
-            this.mScanDeviceList = loadList("device_list");
-            this.allDeviceAddressSet = loadAddressSet("allDeviceAddressSet");
-            this.deviceAddressSet = loadAddressSet("deviceAddressSet");
+        final long systemTime = System.currentTimeMillis();
+        final long current10minTime = getTimeOfCurrent10Minute().getTime();
+        final long maxDiffTime = Math.max(mCountPeriodMinutes.get(), Math.max(SUMMARY_TIMER, ALERT_TIMER))*60*1000;
+        // デバイスのアドレスセットを読み込み
+        Set<String> allDeviceAddressSet = loadAddressSet("allDeviceAddressSet");
+        Set<String> deviceAddressSet = loadAddressSet("deviceAddressSet");
+        // デバイス一覧を読み込み
+        List<ScannedDevice> scanDeviceList = loadList("device_list");
+        Iterator<ScannedDevice> listIt = scanDeviceList.iterator();
+        while(listIt.hasNext()) {
+            ScannedDevice device = listIt.next();
+            long deviceTime = device.getmCurrentTime();
+            long diffTimeInMillis = systemTime - deviceTime;
+            if (diffTimeInMillis>maxDiffTime){
+                // データが古すぎるものは削除
+                listIt.remove();
+                allDeviceAddressSet.remove(device.getDeviceAddress());
+                deviceAddressSet.remove(device.getDeviceAddress());
+                continue;
+            }
+            if (deviceTime > current10minTime){
+                // 直近の10分時を超えている場合は、対象から除外
+                device.setTarget(false);
+                allDeviceAddressSet.remove(device.getDeviceAddress());
+                deviceAddressSet.remove(device.getDeviceAddress());
+                continue;
+            }
             // Alert,Near,Around,Farを復元
-            for (ScannedDevice device : this.mScanDeviceList) {
-                if(device.getAlertFlag()){
-                    mAlertCounter.incrementAndGet();
-                }
-                else {
-                    if( THRESHOLD_NEAR.get() <= device.getRssi()){
-                        mCautionCounter.incrementAndGet();
-                    } else if (THRESHOLD_AROUND.get() < device.getRssi()) {
-                        mDistantCounter.incrementAndGet();
-                    } else{
-                        mFarCounter.incrementAndGet();
-                    }
+            if(device.getAlertFlag()){
+                mAlertCounter.incrementAndGet();
+            }
+            else {
+                if( THRESHOLD_NEAR.get() <= device.getRssi()){
+                    mCautionCounter.incrementAndGet();
+                } else if (THRESHOLD_AROUND.get() < device.getRssi()) {
+                    mDistantCounter.incrementAndGet();
+                } else{
+                    mFarCounter.incrementAndGet();
                 }
             }
         }
+        this.mScanDeviceList = scanDeviceList;
+        this.allDeviceAddressSet = allDeviceAddressSet;
+        this.deviceAddressSet = deviceAddressSet;
 
         if (routine1mFuture == null){
             // データ更新用定期処理（1分間隔）
@@ -154,7 +179,6 @@ public class BleScanTask implements Runnable {
                 @Override
                 public void run() {
                     Log.d(TAG, "update timer");
-                    //final boolean justTime10m = isJustTimeMinuteOf(10);
                     if (mUpdateMethod == UpdateMethod.EVERY_TIME){
                         ScanUpdateCount++;
                         // スキャン結果の更新
@@ -188,11 +212,11 @@ public class BleScanTask implements Runnable {
                 @Override
                 public void run() {
                     Date nowTime = new Date();
-                    if (!isJustTimeMinuteOf(nowTime, 10)){
+                    if (!isJustTimeMinuteOf(nowTime, SUMMARY_TIMER)){
                         // 10分時のみ処理を実行する
                         return;
                     }
-                    if (isSameRecordTime(nowTime, prevRecordTime, 10)){
+                    if (isSameRecordTime(nowTime, prevRecordTime, SUMMARY_TIMER)){
                         // 同一記録時間帯の場合は、処理実行しない
                         return;
                     }
@@ -262,6 +286,7 @@ public class BleScanTask implements Runnable {
         this.ALERT_TIMER = getIntFromString(prefs, "alert_timer", rsrc.getInteger(R.integer.default_alert_timer));
         this.THRESHOLD_AROUND.set(getIntFromString(prefs, "rssi_around", rsrc.getInteger(R.integer.default_rssi_around)));
         this.LOGGING_SETTING = getBoolean(prefs, "logging_ble_scan", rsrc.getBoolean(R.bool.default_logging_ble_scan));
+        this.mCountPeriodMinutes.set(getIntFromString(prefs, "count_period_minutes", rsrc.getInteger(R.integer.default_count_period_minutes)));
 
         return this.mBtAdapter != null;
     }
@@ -306,7 +331,7 @@ public class BleScanTask implements Runnable {
         // スキャンモードの取得
         int scan_mode = Integer.parseInt(prefs.getString("scan_mode",rsrc.getString(R.string.default_scan_mode)));
         // カウント更新方法の取得
-        mUpdateMethod = Integer.parseInt(prefs.getString("update_method", rsrc.getString(R.string.default_scan_method)));
+        mUpdateMethod = Integer.parseInt(prefs.getString("update_method", rsrc.getString(R.string.default_update_method)));
         mUpdatePerMinutes = prefs.getInt("update_per_minutes", rsrc.getInteger(R.integer.default_update_per_minutes));
 
         this.changeSettings(scan_mode);
@@ -485,12 +510,18 @@ public class BleScanTask implements Runnable {
         Date scanDate = new Date(rxTimestampMillis);
 
         boolean contains = false;
+        ScannedDevice exclusionDevice = null;
 
         for (ScannedDevice device : this.mScanDeviceList) {
             // 受信済みチェック
-            if (newDevice.getAddress().equals(device.getDevice().getAddress())) {
+            if (newDevice.getAddress().equals(device.getDeviceAddress())) {
                 // 受信済みの場合
                 contains = true;
+                if (!device.isTarget()){
+                    contains = false;
+                    exclusionDevice = device;
+                    break;
+                }
                 device.setRssi(rssi); // update
                 if(THRESHOLD_NEAR.get() <= rssi){
                     if(!device.getm1stDetect()){
@@ -509,6 +540,7 @@ public class BleScanTask implements Runnable {
                                 if (mCautionCounter.getAndDecrement()==0){
                                     mCautionCounter.set(0);
                                 }
+                                device.setCountType(CountType.ALERT);
                                 device.setAlertFlag(true);
                                 // many near red
                                 debug_log(scanDate, newDevice, rssi,1,(rxTimestampMillis - device.getmStartTime()), mnfrData,0,0, advertiseFlags);
@@ -536,18 +568,30 @@ public class BleScanTask implements Runnable {
             }
         }
         if (!contains) {
-            this.mScanDeviceList.add(new ScannedDevice(newDevice, rssi));
+            ScannedDevice device;
+            if (exclusionDevice == null){
+                // 新規追加の場合
+                device = new ScannedDevice(newDevice, rssi, rxTimestampMillis);
+                this.mScanDeviceList.add(device);
+            } else {
+                // 対象除外されている場合
+                device = exclusionDevice;
+                device.reset(newDevice, rssi, rxTimestampMillis);
+            }
             // add new BluetoothDevice
             if (THRESHOLD_NEAR.get() <= rssi) {
                 mCautionCounter.incrementAndGet();
+                device.setCountType(CountType.CAUTION);
                 // once near yellow
                 debug_log(scanDate, newDevice, rssi,0,0, mnfrData,0, 1, advertiseFlags);
             } else if (THRESHOLD_AROUND.get() < rssi) {
                 mDistantCounter.incrementAndGet();
+                device.setCountType(CountType.DISTANT);
                 // once around purple
                 debug_log(scanDate, newDevice, rssi,0,0, mnfrData,1,2, advertiseFlags);
             } else {
                 mFarCounter.incrementAndGet();
+                device.setCountType(CountType.FAR);
                 // once far purple
                 debug_log(scanDate, newDevice, rssi,0,0, mnfrData,2,2, advertiseFlags);
             }
@@ -588,6 +632,10 @@ public class BleScanTask implements Runnable {
         return THRESHOLD_AROUND;
     }
 
+    public AtomicInteger getCountPeriodMinutesForUpdate(){
+        return mCountPeriodMinutes;
+    }
+
     public void setThresholdNear(int threshold){
         this.THRESHOLD_NEAR.set(threshold);
     }
@@ -604,6 +652,10 @@ public class BleScanTask implements Runnable {
         this.LOGGING_SETTING = check;
     }
 
+    public void setCountPeriodMinutes(int minutes){
+        this.mCountPeriodMinutes.set(minutes);
+    }
+
     public String getUnitId(){
         if (prefs == null){
             return "";
@@ -618,18 +670,31 @@ public class BleScanTask implements Runnable {
         while(listIt.hasNext()) {
             ScannedDevice device = listIt.next();
             long deviceTime = device.getmCurrentTime();
-            if((device.getAlertFlag())&&(( systemTime - deviceTime)>(ALERT_TIMER*60*1000))){
+            long diffTimeInMillis = systemTime - deviceTime;
+            if((device.getAlertFlag())&&(diffTimeInMillis>(ALERT_TIMER*60*1000))){
                 mAlertCounter.decrementAndGet();
                 if (mAlertCounter.get()<0){
                     mAlertCounter.set(0);
                 }
-                listIt.remove();
+                if (diffTimeInMillis>(mCountPeriodMinutes.get()*60*1000)){
+                    listIt.remove();
+                } else {
+                    device.setTarget(false);
+                }
             }
             else if(!device.getm1stDetect()){
-                listIt.remove();
+                if (diffTimeInMillis>(mCountPeriodMinutes.get()*60*1000)){
+                    listIt.remove();
+                } else {
+                    device.setTarget(false);
+                }
             }
-            else if(!device.getAlertFlag()&&((systemTime - deviceTime)>(ALERT_TIMER*60*1000))){
-                listIt.remove();
+            else if(!device.getAlertFlag()&&(diffTimeInMillis>(ALERT_TIMER*60*1000))){
+                if (diffTimeInMillis>(mCountPeriodMinutes.get()*60*1000)){
+                    listIt.remove();
+                } else {
+                    device.setTarget(false);
+                }
             }
         }
         mCautionCounter.set(0);
@@ -637,6 +702,13 @@ public class BleScanTask implements Runnable {
         mFarCounter.set(0);
         allDeviceAddressSet.clear();
         deviceAddressSet.clear();
+        // 削除されず残ったデバイスのアドレスをセットに追加
+        for (ScannedDevice device : this.mScanDeviceList){
+            if (device.isTarget()){
+                allDeviceAddressSet.add(device.getDeviceAddress());
+                deviceAddressSet.add(device.getDeviceAddress());
+            }
+        }
 }
 
     private void saveList() {
@@ -838,6 +910,63 @@ public class BleScanTask implements Runnable {
             value = Boolean.valueOf(prefs.getString(key, String.valueOf(defaultValue)));
         }
         return value;
+    }
+
+    public int getCurrentNearCount(){
+        int count = 0;
+        long systemTime = System.currentTimeMillis();
+        for (ScannedDevice device : this.mScanDeviceList){
+            if (!device.getCountType().isNear()){
+                continue;
+            }
+            long deviceTime = device.getmCurrentTime();
+            long diffTimeInMillis = systemTime - deviceTime;
+            if (diffTimeInMillis<=(mCountPeriodMinutes.get()*60*1000)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int getCurrentAroundCount(){
+        int count = 0;
+        long systemTime = System.currentTimeMillis();
+        for (ScannedDevice device : this.mScanDeviceList){
+            if (!device.getCountType().isAround()){
+                continue;
+            }
+            long deviceTime = device.getmCurrentTime();
+            long diffTimeInMillis = systemTime - deviceTime;
+            if (diffTimeInMillis<=(mCountPeriodMinutes.get()*60*1000)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int getCurrentFarCount(){
+        int count = 0;
+        long systemTime = System.currentTimeMillis();
+        for (ScannedDevice device : this.mScanDeviceList){
+            if (!device.getCountType().isFar()){
+                continue;
+            }
+            long deviceTime = device.getmCurrentTime();
+            long diffTimeInMillis = systemTime - deviceTime;
+            if (diffTimeInMillis<=(mCountPeriodMinutes.get()*60*1000)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private Date getTimeOfCurrent10Minute(){
+        Calendar currentTime = Calendar.getInstance();
+        final int minute = currentTime.get(Calendar.MINUTE);
+        currentTime.set(Calendar.SECOND, 0);
+        currentTime.set(Calendar.MILLISECOND, 0);
+        currentTime.set(Calendar.MINUTE, (minute/10)*10);
+        return currentTime.getTime();
     }
 
 }

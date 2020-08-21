@@ -24,7 +24,7 @@
         <item>Balanced : scans for 2 sec and pauses 3 seconds</item>
         <item>Low latency : scans continuously</item>
     </string-array>
-    <string-array name="scan_mode_entryValues">
+    <string-array name="scan_mode_entryValues" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -40,6 +40,17 @@
     <string name="screen_update_interval">Screen update Interval [sec]</string>
     <string name="screen_update_interval_dialog">Interval to update the screen drawing</string>
     <string name="runin_background">Run in background</string>
+    <string name="count_period_type">Display type of the count</string>
+    <string name="count_period_type_dialog">Select the count to display on the screen and send data.</string>
+    <string-array name="count_period_type_entries">
+        <item>The count resets every 10 minutes (same as the value in the graph)</item>
+        <item>The count of the calculate interval [min] from the last</item>
+    </string-array>
+    <string-array name="count_period_type_entryValues" translatable="false">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string name="count_period_minutes">Calculate interval [min]</string>
     <string name="graph_setting">--- Graph Setting ---</string>
     <string name="graph_min_y">Minimum Y-axis value</string>
     <string name="graph_min_y_dialog">Minimum Y-axis (count value) height to be drawn </string>
@@ -55,7 +66,7 @@
         <item>IMS Device log</item>
         <item>IMS Service log</item>
     </string-array>
-    <string-array name="pref_log_level_list_values">
+    <string-array name="pref_log_level_list_values" translatable="false">
         <item>DEVICE-CONNECTOR</item>
         <item>IFLINK-CONNECTOR</item>
         <item>CUSTOM-DEV</item>

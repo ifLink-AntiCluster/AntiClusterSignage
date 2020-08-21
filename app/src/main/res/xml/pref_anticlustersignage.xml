@@ -35,6 +35,26 @@
             android:dialogTitle="@string/rssi_value_dialog"
             app:useSimpleSummaryProvider="true"/>
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/behavior_setting">
+        <SwitchPreferenceCompat
+            android:key="runin_background"
+            android:title="@string/runin_background"
+            android:defaultValue="@bool/default_runin_background"/>
+        <ListPreference
+            android:key="count_period_type"
+            android:title="@string/count_period_type"
+            android:entries="@array/count_period_type_entries"
+            android:entryValues="@array/count_period_type_entryValues"
+            android:defaultValue="@string/default_count_period_type"
+            android:dialogTitle="@string/count_period_type_dialog"
+            app:useSimpleSummaryProvider="true"/>
+        <EditTextPreference
+            android:key="count_period_minutes"
+            android:title="@string/count_period_minutes"
+            android:defaultValue="@integer/default_count_period_minutes"
+            android:selectAllOnFocus="true"
+            app:useSimpleSummaryProvider="true"/>
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/ims_setting">
         <MultiSelectListPreference
             android:entries="@array/pref_log_level_list_title"

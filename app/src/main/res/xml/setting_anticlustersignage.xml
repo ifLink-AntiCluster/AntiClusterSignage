@@ -34,6 +34,23 @@
                     type="text"
                     unit="dBm" />
             </condition>
+            <condition name="動作設定">
+                <property
+                    name="画面表示するカウント"
+                    datatype="string"
+                    default="0"
+                    key="count_period_type"
+                    option="10分毎にリセットされるカウント（グラフの値と同じ）,直近から集計間隔[分]のカウント"
+                    type="radio"
+                    value="1,2" />
+                <property
+                    name="集計間隔 [分]"
+                    datatype="int"
+                    default="10"
+                    key="count_period_minutes"
+                    type="text"
+                    unit="分" />
+            </condition>
             <condition name="IMS設定">
                 <property
                     name="ログ出力レベル"
@@ -111,6 +128,23 @@
                     key="rssi_around"
                     type="text"
                     unit="dBm" />
+            </condition>
+            <condition name="Behavior Setting">
+                <property
+                    name="Display type of the count"
+                    datatype="string"
+                    default="0"
+                    key="count_period_type"
+                    option="The count resets every 10 minutes (same as the value in the graph),The count of the calculate interval [min] from the last"
+                    type="radio"
+                    value="1,2" />
+                <property
+                    name="Calculate interval"
+                    datatype="int"
+                    default="10"
+                    key="count_period_minutes"
+                    type="text"
+                    unit="min" />
             </condition>
             <condition name="IMS Setting">
                 <property

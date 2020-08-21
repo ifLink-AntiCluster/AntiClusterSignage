@@ -2,6 +2,7 @@ package jp.iflink.anticluster_signage.ims;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.os.Build;
@@ -28,6 +29,7 @@ import jp.co.toshiba.iflink.imsif.IfLinkSettings;
 import jp.co.toshiba.iflink.imsif.IfLinkAlertException;
 import jp.co.toshiba.iflink.ui.PermissionActivity;
 import jp.iflink.anticluster_signage.R;
+import jp.iflink.anticluster_signage.setting.CountPeriodType;
 import jp.iflink.anticluster_signage.task.BleScanTask;
 
 public class AntiClusterSignageDevice extends DeviceConnector {
@@ -39,11 +41,13 @@ public class AntiClusterSignageDevice extends DeviceConnector {
     private Handler handler = new Handler(Looper.getMainLooper());
 
     /** データ送信間隔[秒]. */
-    private AtomicInteger sendDataInterval = new AtomicInteger();
+    private AtomicInteger sendDataInterval;
     /** データ送信用タイマー. */
     private Timer sendDataTimer;
     // 最新のスキャンコールバック時刻
     private Date lastScanCallbackTime;
+    // カウント期間の種別
+    private int countPeriodType;
 
     /**
      * コンストラクタ.
@@ -52,10 +56,13 @@ public class AntiClusterSignageDevice extends DeviceConnector {
      */
     public AntiClusterSignageDevice(final IfLinkConnector ims) {
         super(ims, MONITORING_LEVEL3, PermissionActivity.class);
-        Resources rsrc= ims.getResources();
+        // リソースを取得
+        Resources rsrc = mIms.getResources();
+        // デバイス情報を設定
         mDeviceName = rsrc.getString(R.string.ims_device_name);
         mDeviceSerial = rsrc.getString(R.string.ims_device_serial);
         mSchemaName = rsrc.getString(R.string.ims_schema_name);
+        // スキーマ情報を設定
         setSchema();
 
         mCookie = IfLinkConnector.EPA_COOKIE_KEY_TYPE + "=" + IfLinkConnector.EPA_COOKIE_VALUE_CONFIG
@@ -67,6 +74,10 @@ public class AntiClusterSignageDevice extends DeviceConnector {
                 + IfLinkConnector.EPA_COOKIE_KEY_ADDRESS + "=" + IfLinkConnector.EPA_COOKIE_VALUE_ANY;
 
         mAssetName= rsrc.getString(R.string.ims_asset_name);
+        // 設定値の読み込み
+        SharedPreferences prefs = mIms.getSharedPreferences(DeviceSettingsActivity.PREFERENCE_NAME, 0);
+        sendDataInterval = new AtomicInteger(getIntFromString(prefs, "send_data_interval", rsrc.getInteger(R.integer.default_send_data_interval)));
+        countPeriodType = Integer.parseInt(prefs.getString("count_period_type", rsrc.getString(R.string.default_count_period_type)));
 
         // デバイス登録
         // 基本は、デバイスとの接続確立後、デバイスの対応したシリアル番号に更新してからデバイスを登録してください。
@@ -106,9 +117,19 @@ public class AntiClusterSignageDevice extends DeviceConnector {
                             return;
                         }
                         // カウント値を取得
-                        int near = bleService.getNearCount();
-                        int around = bleService.getAroundCount();
-                        int far = bleService.getFarCount();
+                        int near, around, far;
+                        if (countPeriodType == CountPeriodType.ABSOLUTE){
+                            near = bleService.getNearCount();
+                            around = bleService.getAroundCount();
+                            far = bleService.getFarCount();
+                        } else if (countPeriodType == CountPeriodType.RELATIVE){
+                            near = bleService.getCurrentNearCount();
+                            around = bleService.getCurrentAroundCount();
+                            far = bleService.getCurrentFarCount();
+                        } else {
+                            Log.e(TAG, "countPeriodType is unknown");
+                            return;
+                        }
                         String unitId = bleService.getUnitId();
                         // データ送信
                         sendData(near, around, near+around, far, unitId);
@@ -211,6 +232,12 @@ public class AntiClusterSignageDevice extends DeviceConnector {
             // 変更されていた場合は、タイマーを再設定する
             startSendDataTimer();
         }
+        // カウント集計期間
+        if (bleService != null) {
+            checkUpdateAndSet(bleService.getCountPeriodMinutesForUpdate(), settings, "count_period_minutes", rsrc.getInteger(R.integer.default_count_period_minutes));
+        }
+        // カウント期間の種別
+        this.countPeriodType = Integer.parseInt(settings.getStringValue("count_period_type", rsrc.getString(R.string.default_count_period_type)));
     }
 
     private boolean checkUpdateAndSet(AtomicInteger current, IfLinkSettings settings, String key, int defaultValue) throws IfLinkAlertException {
@@ -322,6 +349,11 @@ public class AntiClusterSignageDevice extends DeviceConnector {
         // スキャンの再始動はIMS内で行っている為、ここでは実施しない
         //ims.getBleScanTask().restartScan();
         return true;
+    }
+
+    private int getIntFromString(SharedPreferences prefs, String key, int defaultValue){
+        String value = prefs.getString(key, String.valueOf(defaultValue));
+        return Integer.parseInt(value);
     }
 
     private void showMessage(final String message){

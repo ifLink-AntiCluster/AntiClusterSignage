@@ -70,6 +70,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
         setupInputType("graph_min_y", InputType.TYPE_CLASS_NUMBER);
         setupInputType("graph_start_hour", InputType.TYPE_CLASS_NUMBER);
         setupInputType("graph_count_hours", InputType.TYPE_CLASS_NUMBER);
+        setupInputType("count_period_minutes", InputType.TYPE_CLASS_NUMBER);
         // デバッグフラグの設定
         bDBG = getDebugFlag(prefs);
     }
@@ -112,6 +113,9 @@ public class SettingsFragment extends PreferenceFragmentCompat
                 break;
             case "rssi_around":
                 bleService.setThresholdAround(getIntFromString(prefs, key, 0));
+                break;
+            case "count_period_minutes":
+                bleService.setCountPeriodMinutes(getIntFromString(prefs, key, 0));
                 break;
             default:
                 break;

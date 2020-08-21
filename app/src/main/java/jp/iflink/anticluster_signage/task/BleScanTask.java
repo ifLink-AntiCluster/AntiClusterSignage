@@ -116,8 +116,7 @@ public class BleScanTask implements Runnable {
     private static final int BLE_CAPABLE_CONTROLLER = 0x08;
     private static final int BLE_CAPABLE_HOST = 0x10;
     // BLE Company code
-    private static final int COMPANY_CODE_APPLE = 0x004C;
-    private static final int IPHONE_THRESHOLD = -80;
+    private static final int COMPANY_CODE_MICROSOFT = 0x0006;
     // update method and per minutes
     private int mUpdateMethod;
     private int mUpdatePerMinutes;
@@ -464,8 +463,12 @@ public class BleScanTask implements Runnable {
             // スキャンレコードが無いデータは対象外
             return false;
         }
-        if( advertiseFlags == -1 || (advertiseFlags & (BLE_CAPABLE_CONTROLLER | BLE_CAPABLE_HOST)) == 0){
+        if (advertiseFlags == -1 || (advertiseFlags & (BLE_CAPABLE_CONTROLLER | BLE_CAPABLE_HOST)) == 0){
             // DeviceCapableにControllerとHostが無い場合は対象外
+            return false;
+        }
+        if (mnfrData.get(COMPANY_CODE_MICROSOFT) != null){
+            // Microsoft Advertising Beaconの場合は、WindowsPCと判断し除外
             return false;
         }
         return true;

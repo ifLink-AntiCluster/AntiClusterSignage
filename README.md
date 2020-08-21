@@ -152,6 +152,10 @@ The default setting is Low power (scan once every 5 seconds for 0.5 seconds), bu
 Thresholds of distance determination based on the radio wave strength can be changed on the setting screen.<br>
 The default estimation criterion for 3 meters is -65 dBm or higher.<br>
 The default estimation criterion for 10 meters is -75 dBm or higher.
+<br>
+By default, the count to display on the screen and send data is reset every 10 minutes,<br>
+but it can be changed the count of the calculate interval [min] from the last on the setting screen.<br>
+
 
 ## Usage for IfLink MicroService
 *now translating and it will be available soon.*

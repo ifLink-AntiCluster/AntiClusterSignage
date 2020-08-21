@@ -1,14 +1,13 @@
 ## About ifLink AntiCluster Signage
 
-English text follows the Japanese text.
+[English text follows the Japanese text.]#overview-1
 
 ## Overview
 スマートフォンが発信する電波を利用して近接をカウントするアプリである、AntiClusterを
 常時設置して利用する用途に特化させたIMS（ifLinkマイクロサービス）アプリです。
 
 ## Description
-スマートフォンがBluetooth機器接続のために発信しているAdvertisingパケットを受信し、<br>
-電波強度に応じて「3m以内」「3～10m」「10m以上」の判定を行い、近接しているデバイスの数をカウントします。<br>
+スマートフォンがBluetooth機器接続のために発信しているAdvertisingパケットを受信し、電波強度に応じて「3m以内」「3～10m」「10m以上」の判定を行い、近接しているデバイスの数をカウントします。<br>
 カウントの現在値は10分毎に集計・クリアされ、10m以下の値がリアルタイムにグラフに描画されます。<br>
 このアプリは単独でも動作しますが、ifLinkがインストールされている場合、IFのIMSとして一定間隔でデータを送信します。
 
@@ -42,7 +41,10 @@ Advertisingパケットをスキャンするタイミングおよび電波強度
 <br>
 電波強度に応じた距離判定の閾値も、設定画面で変更可能です。<br>
 3mの推定基準は、初期設定では-65dBm以上です。<br>
-10mの推定基準は、初期設定では-85dBm以上です。<br>
+10mの推定基準は、初期設定では-75dBm以上です。<br>
+<br>
+画面表示およびデータ送信する際のカウントは、デフォルトでは10分毎にリセットされますが、<br>
+設定画面にて直近から指定した集計間隔[分]までのカウントに変更する事も可能です。<br>
 
 ## Usage for IfLink MicroService
 デバイスサービスの登録には、以下のXMLファイルをご利用ください。<br>
@@ -87,7 +89,7 @@ Android OS 7.0以降に対応しています。
 
 ## Sample Application
 ソースコードをビルドしたサンプルアプリケーションを登録しています。<br>
-[SampleApplication/anticluster_signage_v1.0.0.apk](https://github.com/ifLink-AntiCluster/AntiClusterSignage/raw/master/SampleApplication/anticluster_signage_v1.0.0.apk)
+[SampleApplication/anticluster_signage_v1.0.0.apk](https://github.com/ifLink-AntiCluster/AntiClusterSignage/raw/master/SampleApplication/anticluster_signage_v1.0.1.apk)
 
 ## Community
 リクエスト、質問、バグリポートがある場合、GitHubのissue機能を使用して下さい。
@@ -149,10 +151,10 @@ The default setting is Low power (scan once every 5 seconds for 0.5 seconds), bu
 <br>
 Thresholds of distance determination based on the radio wave strength can be changed on the setting screen.<br>
 The default estimation criterion for 3 meters is -65 dBm or higher.<br>
-The default estimation criterion for 10 meters is -85 dBm or higher.
+The default estimation criterion for 10 meters is -75 dBm or higher.
 
 ## Usage for IfLink MicroService
-* now translating and it will be available soon.
+*now translating and it will be available soon.*
 
 ## For debugging
 There are 2 functions for debugging; output log of scanned devices and draw the number of scanned devices held internally.<br>
@@ -176,7 +178,7 @@ Compatible with Android OS 7.0 or later.
 
 ## Sample Application
 Here is a sample applicaiotn apk which built from the source code.<br>
-[SampleApplication/anticluster_signage_v1.0.0.apk](https://github.com/ifLink-AntiCluster/AntiClusterSignage/raw/master/SampleApplication/anticluster_signage_v1.0.0.apk)
+[SampleApplication/anticluster_signage_v1.0.0.apk](https://github.com/ifLink-AntiCluster/AntiClusterSignage/raw/master/SampleApplication/anticluster_signage_v1.0.1.apk)
 
 ## Community
 If you have a request, question, or bug report, please use the issue feature on GitHub.

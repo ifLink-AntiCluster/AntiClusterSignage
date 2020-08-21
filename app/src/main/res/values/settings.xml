@@ -7,7 +7,7 @@
     <!-- デフォルト値設定 -->
     <string name="default_scan_mode" translatable="false">0</string>
     <integer name="default_rssi_near">-65</integer>
-    <integer name="default_rssi_around">-85</integer>
+    <integer name="default_rssi_around">-75</integer>
     <integer name="default_alert_timer">15</integer>
     <bool name="default_logging_ble_scan">false</bool>
     <integer name="default_update_time">5</integer>

@@ -29,7 +29,7 @@
                 <property
                     name="電波強度"
                     datatype="int"
-                    default="-85"
+                    default="-75"
                     key="rssi_around"
                     type="text"
                     unit="dBm" />
@@ -124,7 +124,7 @@
                 <property
                     name="Radio wave strength"
                     datatype="int"
-                    default="-85"
+                    default="-75"
                     key="rssi_around"
                     type="text"
                     unit="dBm" />
